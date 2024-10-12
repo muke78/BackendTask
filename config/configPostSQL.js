@@ -2,10 +2,11 @@ require('dotenv').config({ path: '.env' });
 const { Pool } = require('pg');
 
 const dbConnection = {
-  host: process.env.DB_HOST_ESCRITURA,
-  user: process.env.DB_USER,
-  password: process.env.BD_PASS,
-  database: process.env.BD_NAME,
+  host: process.env.DB_HOST_ESCRITURAPG,
+  user: process.env.DB_USERPG,
+  password: process.env.BD_PASSPG,
+  database: process.env.BD_NAMEPG,
+  port: 5432,
   connectTimeout: 30000,
   waitForConnections: true,
   connectionLimit: 100,

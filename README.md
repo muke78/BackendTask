@@ -5,6 +5,7 @@
  - La respuesta de cada consulta es una **Promesa** en los **helpers** y solo se extrae el metodo y se manda el **query a ejecutar y los parametros**
  - EL archivo .env_demo esta las variables de entorno para modificar el **ANON_KEY** y la **URL**
  - Esta documentada en swagger en la ruta ``` http://localhost:3000/api-docs/ ```
+ - Hay espejos de archivos uno con mySQL y otro con PostgreSQL en la carpeta ``` router/index.js ``` se hace el cambio entre un manejador de Base de datos y otro
  - En local se incia con yarn dev
 
  ## Estos son los endpoints
