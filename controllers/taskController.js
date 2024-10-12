@@ -9,7 +9,7 @@ const ObtainTaskInProgress = async (req, res) => {
     if (result.length === 0)
       return res
         .status(404)
-        .send({ message: 'No se encontraron tareas en progreso' });
+        .send({ message: 'No se encontraron tareas en proceso' });
 
     res.status(200).send(result);
   } catch (error) {
