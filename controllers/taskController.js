@@ -1,8 +1,9 @@
 const { connectionQuery } = require('../helpers/connection.helper');
+// const { connectionQuery } = require('../helpers/connectionPostSQL.helper');
 
 const ObtainTaskInProgress = async (req, res) => {
   try {
-    const obtainTaskInProgess = `SELECT * FROM task WHERE Status = "Active"`;
+    const obtainTaskInProgess = `SELECT * FROM task WHERE Status = 'Active'`;
     const result = await connectionQuery(obtainTaskInProgess);
 
     if (result.length === 0)
@@ -40,7 +41,7 @@ const ObtainTaskWontDo = async (req, res) => {
     if (result.length === 0)
       return res
         .status(404)
-        .send({ message: 'No se encontraron tareas completadas' });
+        .send({ message: 'No se encontraron tareas no realizadas' });
 
     res.status(200).send(result);
   } catch (error) {
