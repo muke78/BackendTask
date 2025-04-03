@@ -2,11 +2,11 @@ const express = require('express');
 
 // MYSQl
 
-// const taskRouter = require('./taskRouter');
-// const router = express.Router();
-// router.use('/api/task', taskRouter);
+const taskRouter = require('./taskRouter');
+const router = express.Router();
+router.use('/api/task', taskRouter);
 
-// module.exports = router;
+module.exports = router;
 
 
 
@@ -14,8 +14,8 @@ const express = require('express');
 
 // POSTGRESQL
 
-const taskRouterPG = require('./taskRouterPG');
-const routerPG = express.Router();
-routerPG.use('/api/task', taskRouterPG);
+// const taskRouterPG = require('./taskRouterPG');
+// const routerPG = express.Router();
+// routerPG.use('/api/task', taskRouterPG);
 
-module.exports = routerPG;
+// module.exports = routerPG;

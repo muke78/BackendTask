@@ -2,6 +2,55 @@ const express = require('express');
 const TaskController = require('../controllers/taskController');
 const api = express.Router();
 api.use(express.json());
+/**
+ * @swagger
+ * /task:
+ *   get:
+ *     summary: Obtiene la lista completa de tareas
+ *     description: Devuelve todas las tareas almacenadas en la base de datos.
+ *     tags:
+ *       - Tareas
+ *     responses:
+ *       200:
+ *         description: Lista de tareas obtenida exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     example: "c31dfbe2-105a-11f0-9712-eb9217ba62bd"
+ *                   title:
+ *                     type: string
+ *                     example: "Comprar víveres"
+ *                   description:
+ *                     type: string
+ *                     example: "Comprar pan, leche y huevos"
+ *                   status:
+ *                     type: string
+ *                     example: "pendiente"
+ *                   createdAt:
+ *                     type: string
+ *                     format: date-time
+ *                     example: "2024-04-03T10:15:30Z"
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Hubo un error al obtener las tareas"
+ *                 error:
+ *                   type: string
+ */
+
+api.get('/task', TaskController.ObtainFullTask);
 
 /**
  * @swagger
@@ -38,7 +87,6 @@ api.use(express.json());
  *       500:
  *         description: Error del servidor.
  */
-
 
 api.get('/task-progress', TaskController.ObtainTaskInProgress);
 
@@ -78,7 +126,6 @@ api.get('/task-progress', TaskController.ObtainTaskInProgress);
  *         description: Error del servidor.
  */
 
-
 api.get('/task-complete', TaskController.ObtainTaskCompleted);
 
 /**
@@ -116,7 +163,6 @@ api.get('/task-complete', TaskController.ObtainTaskCompleted);
  *       500:
  *         description: Error del servidor.
  */
-
 
 api.get('/task-itWasNot', TaskController.ObtainTaskWontDo);
 
@@ -261,7 +307,6 @@ api.post('/new-task', TaskController.createTask);
 
 api.put('/update-task', TaskController.editTask);
 
-
 /**
  * @swagger
  * /delete-task/{id}:
@@ -276,8 +321,8 @@ api.put('/update-task', TaskController.editTask);
  *         required: true
  *         description: ID de la tarea a eliminar
  *         schema:
- *           type: integer
- *           example: 1
+ *           type: string
+ *           example: c31dfbe2-105a-11f0-9712-eb9217ba62bd
  *     responses:
  *       200:
  *         description: La tarea fue eliminada exitosamente
@@ -312,7 +357,7 @@ api.put('/update-task', TaskController.editTask);
  *                 error:
  *                   type: string
  */
-api.delete('/delete-task/:id', TaskController.deleteTask);
 
+api.delete('/delete-task/:id', TaskController.deleteTask);
 
 module.exports = api;

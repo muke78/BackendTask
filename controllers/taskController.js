@@ -1,52 +1,29 @@
 const { connectionQuery } = require('../helpers/connection.helper');
 
-const ObtainTaskInProgress = async (req, res) => {
+// Función genérica para obtener tareas
+const obtainTasks = async (req, res, status = null) => {
   try {
-    const obtainTaskInProgess = `SELECT * FROM task WHERE Status = 'Active'`;
-    const result = await connectionQuery(obtainTaskInProgess);
+    const query = status
+      ? `SELECT * FROM task WHERE Status = ?`
+      : `SELECT * FROM task`;
 
-    if (result.length === 0)
-      return res
-        .status(404)
-        .send({ message: 'No se encontraron tareas en proceso' });
+    const result = await connectionQuery(query, status ? [status] : []);
+
+    if (result.length === 0) {
+      return res.status(404).send({ message: 'No se encontraron tareas' });
+    }
 
     res.status(200).send(result);
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    res.status(500).send({ message: 'Error al obtener tareas', error });
   }
 };
 
-const ObtainTaskCompleted = async (req, res) => {
-  try {
-    const obtainTaskInCompleted = `SELECT * FROM task WHERE Status = 'Complete'`;
-    const result = await connectionQuery(obtainTaskInCompleted);
-
-    if (result.length === 0)
-      return res
-        .status(404)
-        .send({ message: 'No se encontraron tareas completadas' });
-
-    res.status(200).send(result);
-  } catch (error) {
-    res.status(500).send({ message: error.message });
-  }
-};
-
-const ObtainTaskWontDo = async (req, res) => {
-  try {
-    const obtainTaskInWontDo = `SELECT * FROM task WHERE Status = 'ItWasNot'`;
-    const result = await connectionQuery(obtainTaskInWontDo);
-
-    if (result.length === 0)
-      return res
-        .status(404)
-        .send({ message: 'No se encontraron tareas no realizadas' });
-
-    res.status(200).send(result);
-  } catch (error) {
-    res.status(500).send({ message: error.message });
-  }
-};
+// Endpoints optimizados
+const ObtainFullTask = (req, res) => obtainTasks(req, res);
+const ObtainTaskInProgress = (req, res) => obtainTasks(req, res, 'Active');
+const ObtainTaskCompleted = (req, res) => obtainTasks(req, res, 'Complete');
+const ObtainTaskWontDo = (req, res) => obtainTasks(req, res, 'ItWasNot');
 
 const createTask = async (req, res) => {
   try {
@@ -55,7 +32,7 @@ const createTask = async (req, res) => {
     if (!title || !description || !icon || !status)
       return res.status(400).send({ message: 'Los campos son requeridos' });
 
-    const queryInsert = `INSERT INTO task (title, description, icon, Status) VALUES(?, ?, ?, ?) `;
+    const queryInsert = `INSERT INTO task (id, title, description, icon, Status) VALUES(UUID(), ?, ?, ?, ?) `;
     const queryParamsInsert = [title, description, icon, status];
     await connectionQuery(queryInsert, queryParamsInsert);
 
@@ -98,36 +75,30 @@ const deleteTask = async (req, res) => {
   try {
     const { id } = req.params;
 
-    if (!id)
-      return res.status(400).send({ message: 'No se envio el id valido' });
-
-    if (id) {
-      const queryValidate = `SELECT * FROM task WHERE id = ?`;
-      const queryParamsValidate = [id];
-      const resultValidate = await connectionQuery(
-        queryValidate,
-        queryParamsValidate
-      );
-
-      if (resultValidate.length === 0) {
-        return res.status(400).send({
-          message: 'La tarea no existe',
-        });
-      }
+    if (!id) {
+      return res.status(400).send({ message: 'ID de tarea requerido' });
     }
 
-    const queryDeleteTask = `DELETE FROM task WHERE id = ?`;
-    await connectionQuery(queryDeleteTask, [id]);
+    const result = await connectionQuery(
+      `SELECT title FROM task WHERE id = ?`,
+      [id]
+    );
+    if (result.length === 0) {
+      return res.status(404).send({ message: 'Tarea no encontrada' });
+    }
 
-    res.status(200).send({ message: 'La tarea fue eliminada' });
-  } catch (error) {
+    await connectionQuery(`DELETE FROM task WHERE id = ?`, [id]);
+
     res
-      .status(500)
-      .send({ message: 'Hubo un error al eliminar la tarea', error });
+      .status(200)
+      .send({ message: `La tarea '${result[0].title}' fue eliminada` });
+  } catch (error) {
+    res.status(500).send({ message: 'Error al eliminar la tarea', error });
   }
 };
 
 module.exports = {
+  ObtainFullTask,
   ObtainTaskInProgress,
   ObtainTaskCompleted,
   ObtainTaskWontDo,

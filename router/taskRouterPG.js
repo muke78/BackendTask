@@ -276,8 +276,8 @@ api.put('/update-task', TaskController.editTask);
  *         required: true
  *         description: ID de la tarea a eliminar
  *         schema:
- *           type: integer
- *           example: 1
+ *           type: string
+ *           example: c31dfbe2-105a-11f0-9712-eb9217ba62bd
  *     responses:
  *       200:
  *         description: La tarea fue eliminada exitosamente
