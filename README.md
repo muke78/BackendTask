@@ -1,6 +1,6 @@
 ## Backend My Task Board
 
- - Se manejo con id incremental identado
+ - Se manejo con uuid()
  - El back se hizo en **mysql2** pero tiene la propia conexion en **PostgreSQL** para que se modificada para subir a cloud
  - La respuesta de cada consulta es una **Promesa** en los **helpers** y solo se extrae el metodo y se manda el **query a ejecutar y los parametros**
  - EL archivo .env_demo esta las variables de entorno para modificar el **ANON_KEY** y la **URL**
