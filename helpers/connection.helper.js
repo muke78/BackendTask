@@ -1,4 +1,4 @@
-const { pool } = require('../config/config');
+import { pool } from '../config/config.js';
 
 const connectionQuery = (sql, params) => {
   return new Promise((resolve, reject) => {
@@ -12,4 +12,4 @@ const connectionQuery = (sql, params) => {
   });
 };
 
-module.exports = { connectionQuery };
+export { connectionQuery };

@@ -1,4 +1,4 @@
-const { connectionQuery } = require('../helpers/connection.helper');
+import { connectionQuery } from '../helpers/connection.helper.js';
 
 // Función genérica para obtener tareas
 const obtainTasks = async (req, res, status = null) => {
@@ -13,9 +13,9 @@ const obtainTasks = async (req, res, status = null) => {
       return res.status(404).send({ message: 'No se encontraron tareas' });
     }
 
-    res.status(200).send(result);
+    return res.status(200).send(result);
   } catch (error) {
-    res.status(500).send({ message: 'Error al obtener tareas', error });
+   return res.status(500).send({ message: 'Error al obtener tareas', error });
   }
 };
 
@@ -36,9 +36,9 @@ const createTask = async (req, res) => {
     const queryParamsInsert = [title, description, icon, status];
     await connectionQuery(queryInsert, queryParamsInsert);
 
-    res.status(201).send({ message: 'Tarea creada con exito' });
+    return res.status(201).send({ message: 'Tarea creada con exito' });
   } catch (error) {
-    res.status(500).send({ message: 'Error al crear la tarea', error });
+    return res.status(500).send({ message: 'Error al crear la tarea', error });
   }
 };
 
@@ -53,7 +53,7 @@ const editTask = async (req, res) => {
         [id]
       );
       if (resultValidateExistId.length === 0) {
-        res.status(404).send({
+        return res.status(404).send({
           message: 'No se proporciono un id valido o la tarea no existe',
         });
       }
@@ -63,9 +63,9 @@ const editTask = async (req, res) => {
     const queryParamsUpdateTask = [title, description, icon, status, id];
     await connectionQuery(queryUpdateTask, queryParamsUpdateTask);
 
-    res.status(200).send({ message: 'La tarea se actualizo con exito' });
+   return res.status(200).send({ message: 'La tarea se actualizo con exito' });
   } catch (error) {
-    res
+   return res
       .status(500)
       .send({ message: 'Ocurrio un error al actualizar la tarea', error });
   }
@@ -89,15 +89,15 @@ const deleteTask = async (req, res) => {
 
     await connectionQuery(`DELETE FROM task WHERE id = ?`, [id]);
 
-    res
+    return res
       .status(200)
       .send({ message: `La tarea '${result[0].title}' fue eliminada` });
   } catch (error) {
-    res.status(500).send({ message: 'Error al eliminar la tarea', error });
+   return res.status(500).send({ message: 'Error al eliminar la tarea', error });
   }
 };
 
-module.exports = {
+export {
   ObtainFullTask,
   ObtainTaskInProgress,
   ObtainTaskCompleted,

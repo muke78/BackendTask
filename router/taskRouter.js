@@ -1,7 +1,17 @@
-const express = require('express');
-const TaskController = require('../controllers/taskController');
+import express from 'express';
+import {
+  ObtainFullTask,
+  ObtainTaskCompleted,
+  ObtainTaskInProgress,
+  ObtainTaskWontDo,
+  createTask,
+  deleteTask,
+  editTask,
+} from '../controllers/taskController.js';
 const api = express.Router();
 api.use(express.json());
+
+
 /**
  * @swagger
  * /task:
@@ -50,7 +60,7 @@ api.use(express.json());
  *                   type: string
  */
 
-api.get('/task', TaskController.ObtainFullTask);
+api.get('/task', ObtainFullTask);
 
 /**
  * @swagger
@@ -88,7 +98,7 @@ api.get('/task', TaskController.ObtainFullTask);
  *         description: Error del servidor.
  */
 
-api.get('/task-progress', TaskController.ObtainTaskInProgress);
+api.get('/task-progress', ObtainTaskInProgress);
 
 /**
  * @swagger
@@ -126,7 +136,7 @@ api.get('/task-progress', TaskController.ObtainTaskInProgress);
  *         description: Error del servidor.
  */
 
-api.get('/task-complete', TaskController.ObtainTaskCompleted);
+api.get('/task-complete', ObtainTaskCompleted);
 
 /**
  * @swagger
@@ -164,7 +174,7 @@ api.get('/task-complete', TaskController.ObtainTaskCompleted);
  *         description: Error del servidor.
  */
 
-api.get('/task-itWasNot', TaskController.ObtainTaskWontDo);
+api.get('/task-itWasNot', ObtainTaskWontDo);
 
 /**
  * @swagger
@@ -233,7 +243,7 @@ api.get('/task-itWasNot', TaskController.ObtainTaskWontDo);
  *                   description: Mensaje de error detallado.
  */
 
-api.post('/new-task', TaskController.createTask);
+api.post('/new-task', createTask);
 
 /**
  * @swagger
@@ -305,7 +315,7 @@ api.post('/new-task', TaskController.createTask);
  *                   type: string
  */
 
-api.put('/update-task', TaskController.editTask);
+api.put('/update-task', editTask);
 
 /**
  * @swagger
@@ -358,6 +368,6 @@ api.put('/update-task', TaskController.editTask);
  *                   type: string
  */
 
-api.delete('/delete-task/:id', TaskController.deleteTask);
+api.delete('/delete-task/:id', deleteTask);
 
-module.exports = api;
+export { api };

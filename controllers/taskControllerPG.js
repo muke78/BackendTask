@@ -1,4 +1,4 @@
-const { connectionQuery } = require('../helpers/connectionPostSQL.helper');
+import { connectionQuery } from '../helpers/connection.helper';
 
 // Función genérica para obtener tareas
 const obtainTasks = async (req, res, status = null) => {

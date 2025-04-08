@@ -1,7 +1,13 @@
-require('dotenv').config({ path: '.env' });
-const path = require('path');
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+process.loadEnvFile();
+
+// Emular __dirname en ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const swaggerDefinition = {
   openapi: '3.1.0',
@@ -20,7 +26,7 @@ const swaggerDefinition = {
 
 const options = {
   swaggerDefinition,
-  apis: [path.resolve(__dirname, '../router/*.js')],
+  apis: [path.join(__dirname, '../router/*.js')],
 };
 
 const swaggerDocument = swaggerJsdoc(options);
@@ -36,7 +42,4 @@ const setupSwagger = (app) => {
   );
 };
 
-module.exports = {
-  swaggerDocument,
-  setupSwagger,
-};
+export { swaggerDocument, setupSwagger };

@@ -1,13 +1,11 @@
-const express = require('express');
+import express from 'express';
 
 // MYSQl
-
-const taskRouter = require('./taskRouter');
+import { api } from './taskRouter.js';
 const router = express.Router();
-router.use('/api/task', taskRouter);
+router.use('/api/task', api);
 
-module.exports = router;
-
+export { router };
 
 // POSTGRESQL
 

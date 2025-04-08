@@ -1,5 +1,6 @@
-require('dotenv').config({ path: '.env' });
-const { Pool } = require('pg');
+import { Pool } from 'pg';
+
+process.loadEnvFile();
 
 const dbConnection = {
   host: process.env.DB_HOST_ESCRITURAPG,
