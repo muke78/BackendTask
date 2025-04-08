@@ -1,6 +1,4 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 echo "🔍 Validando mensaje de commit..."
 
 # Expresión regular del formato: tipo: descripción mínima de 10 caracteres

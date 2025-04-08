@@ -16,7 +16,6 @@ setupSwagger(app);
 app.use(cors(corsOptions));
 app.use(morgan("dev"));
 app.use(helmet());
-// app.use(securityHeadersMiddleware);
 app.use(router);
 
 // Middleware de manejo de errores
