@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { Pool } from "pg";
 
 process.loadEnvFile();
 
@@ -16,12 +16,12 @@ const dbConnection = {
 
 const pool = new Pool(dbConnection);
 
-pool.on('connect', () => {
-  console.log('Conexión exitosa a la base de datos');
+pool.on("connect", () => {
+  console.log("Conexión exitosa a la base de datos");
 });
 
-pool.on('error', (err) => {
-  console.error('Error en la conexión a la base de datos', err);
+pool.on("error", (err) => {
+  console.error("Error en la conexión a la base de datos", err);
 });
 
 module.exports = {

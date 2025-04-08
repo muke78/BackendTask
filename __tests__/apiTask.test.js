@@ -1,14 +1,14 @@
-const frisby = require('frisby');
+const frisby = require("frisby");
 
-const BASE_URL = 'http://localhost:3000/api/task';
+const BASE_URL = "http://localhost:3000/api/task";
 
-describe('🧪 Pruebas de la API de Tareas', () => {
-  it('✅ Obtener todas las tareas', async () => {
+describe("🧪 Pruebas de la API de Tareas", () => {
+  it("✅ Obtener todas las tareas", async () => {
     await frisby
       .get(`${BASE_URL}/task`)
-      .expect('status', 200)
-      .expect('header', 'Content-Type', /application\/json/)
-      .expect('jsonTypes', '*', {
+      .expect("status", 200)
+      .expect("header", "Content-Type", /application\/json/)
+      .expect("jsonTypes", "*", {
         id: frisby.Joi.string().required(),
         title: frisby.Joi.string().required(),
         description: frisby.Joi.string().required(),
@@ -17,12 +17,12 @@ describe('🧪 Pruebas de la API de Tareas', () => {
       });
   });
 
-  it('✅ Obtener todas las tareas en progreso', async () => {
+  it("✅ Obtener todas las tareas en progreso", async () => {
     await frisby
       .get(`${BASE_URL}/task-progress`)
-      .expect('status', 200)
-      .expect('header', 'Content-Type', /application\/json/)
-      .expect('jsonTypes', '*', {
+      .expect("status", 200)
+      .expect("header", "Content-Type", /application\/json/)
+      .expect("jsonTypes", "*", {
         id: frisby.Joi.string().required(),
         title: frisby.Joi.string().required(),
         description: frisby.Joi.string().required(),
@@ -31,12 +31,12 @@ describe('🧪 Pruebas de la API de Tareas', () => {
       });
   });
 
-  it('✅ Obtener todas las tareas completadas', async () => {
+  it("✅ Obtener todas las tareas completadas", async () => {
     await frisby
       .get(`${BASE_URL}/task-complete`)
-      .expect('status', 200)
-      .expect('header', 'Content-Type', /application\/json/)
-      .expect('jsonTypes', '*', {
+      .expect("status", 200)
+      .expect("header", "Content-Type", /application\/json/)
+      .expect("jsonTypes", "*", {
         id: frisby.Joi.string().required(),
         title: frisby.Joi.string().required(),
         description: frisby.Joi.string().required(),
@@ -45,12 +45,12 @@ describe('🧪 Pruebas de la API de Tareas', () => {
       });
   });
 
-  it('✅ Obtener todas las tareas no completadas', async () => {
+  it("✅ Obtener todas las tareas no completadas", async () => {
     await frisby
       .get(`${BASE_URL}/task-itWasNot`)
-      .expect('status', 200)
-      .expect('header', 'Content-Type', /application\/json/)
-      .expect('jsonTypes', '*', {
+      .expect("status", 200)
+      .expect("header", "Content-Type", /application\/json/)
+      .expect("jsonTypes", "*", {
         id: frisby.Joi.string().required(),
         title: frisby.Joi.string().required(),
         description: frisby.Joi.string().required(),
@@ -59,31 +59,31 @@ describe('🧪 Pruebas de la API de Tareas', () => {
       });
   });
 
-  it('✅ Crear una nueva tarea', async () => {
+  it("✅ Crear una nueva tarea", async () => {
     await frisby
       .post(`${BASE_URL}/new-task`, {
-        title: 'Nueva tarea',
-        description: 'Descripción de la nueva tarea',
-        icon: '📝',
-        status: 'Active',
+        title: "Nueva tarea",
+        description: "Descripción de la nueva tarea",
+        icon: "📝",
+        status: "Active",
       })
-      .expect('status', 201)
-      .expect('json', 'message', 'Tarea creada con exito');
+      .expect("status", 201)
+      .expect("json", "message", "Tarea creada con exito");
   });
 
-  it('✅ Editar una tarea', async () => {
-    const taskId = '0976feca-1428-11f0-8690-c31f503312c1'; // Reemplaza con un ID de tarea válido
+  it("✅ Editar una tarea", async () => {
+    const taskId = "e411cb11-1426-11f0-8690-c31f503312c1";
     await frisby
       .put(`${BASE_URL}/update-task`, {
         id: taskId,
-        title: 'Actualizar documentación',
+        title: "Actualizar documentación",
         description:
-          'Revisar la documentación del proyecto y hacer las correcciones necesarias',
-        icon: 'sd',
-        status: 'Complete',
+          "Revisar la documentación del proyecto y hacer las correcciones necesarias",
+        icon: "sd",
+        status: "Complete",
       })
-      .expect('status', 200)
-      .expect('json', 'message', 'La tarea se actualizo con exito');
+      .expect("status", 200)
+      .expect("json", "message", "La tarea se actualizo con exito");
   });
 
   // it('✅ Borrar una tarea', async () => {

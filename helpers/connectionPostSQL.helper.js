@@ -1,4 +1,4 @@
-import { pool } from '../config/configPostSQL.js';
+import { pool } from "../config/configPostSQL.js";
 
 const connectionQuery = (sql, params) => {
   return new Promise((resolve, reject) => {
@@ -8,7 +8,7 @@ const connectionQuery = (sql, params) => {
         resolve(results.rows);
       })
       .catch((error) => {
-        console.error('Error en la consulta a la base de datos', error);
+        console.error("Error en la consulta a la base de datos", error);
         reject(error);
       });
   });

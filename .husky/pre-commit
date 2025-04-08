@@ -1,0 +1,30 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🔍 Verificando archivos antes del commit..."
+
+# Ejecutar pruebas con yarn
+echo "🧪 Ejecutando tests..."
+if ! yarn test; then
+  echo "❌ Tests fallaron. Corrige los errores antes de hacer commit."
+  exit 1
+fi
+
+# Formatear código con Prettier
+echo "🚀 Ejecutando Prettier..."
+if ! yarn run prettier --write .; then
+  echo "❌ Error al ejecutar Prettier."
+  exit 1
+fi
+
+# Agregar los archivos modificados después del formateo
+git add .
+
+# Verificar que el código esté actualizado antes del push
+echo "🔄 Verificando que tu código esté actualizado..."
+if ! git pull; then
+  echo "❌ Error al actualizar el código. Revisa los conflictos."
+  exit 1
+fi
+
+echo "✅ Todo listo para el commit. 🎉"

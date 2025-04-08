@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 import {
   ObtainFullTask,
   ObtainTaskCompleted,
@@ -7,10 +7,9 @@ import {
   createTask,
   deleteTask,
   editTask,
-} from '../controllers/taskController.js';
+} from "../controllers/taskController.js";
 const api = express.Router();
 api.use(express.json());
-
 
 /**
  * @swagger
@@ -60,7 +59,7 @@ api.use(express.json());
  *                   type: string
  */
 
-api.get('/task', ObtainFullTask);
+api.get("/task", ObtainFullTask);
 
 /**
  * @swagger
@@ -98,7 +97,7 @@ api.get('/task', ObtainFullTask);
  *         description: Error del servidor.
  */
 
-api.get('/task-progress', ObtainTaskInProgress);
+api.get("/task-progress", ObtainTaskInProgress);
 
 /**
  * @swagger
@@ -136,7 +135,7 @@ api.get('/task-progress', ObtainTaskInProgress);
  *         description: Error del servidor.
  */
 
-api.get('/task-complete', ObtainTaskCompleted);
+api.get("/task-complete", ObtainTaskCompleted);
 
 /**
  * @swagger
@@ -174,7 +173,7 @@ api.get('/task-complete', ObtainTaskCompleted);
  *         description: Error del servidor.
  */
 
-api.get('/task-itWasNot', ObtainTaskWontDo);
+api.get("/task-itWasNot", ObtainTaskWontDo);
 
 /**
  * @swagger
@@ -243,7 +242,7 @@ api.get('/task-itWasNot', ObtainTaskWontDo);
  *                   description: Mensaje de error detallado.
  */
 
-api.post('/new-task', createTask);
+api.post("/new-task", createTask);
 
 /**
  * @swagger
@@ -315,7 +314,7 @@ api.post('/new-task', createTask);
  *                   type: string
  */
 
-api.put('/update-task', editTask);
+api.put("/update-task", editTask);
 
 /**
  * @swagger
@@ -368,6 +367,6 @@ api.put('/update-task', editTask);
  *                   type: string
  */
 
-api.delete('/delete-task/:id', deleteTask);
+api.delete("/delete-task/:id", deleteTask);
 
 export { api };

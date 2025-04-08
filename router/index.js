@@ -1,9 +1,9 @@
-import express from 'express';
+import express from "express";
 
 // MYSQl
-import { api } from './taskRouter.js';
+import { api } from "./taskRouter.js";
 const router = express.Router();
-router.use('/api/task', api);
+router.use("/api/task", api);
 
 export { router };
 

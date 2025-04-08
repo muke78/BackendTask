@@ -1,4 +1,4 @@
-import mysql from 'mysql2';
+import mysql from "mysql2";
 
 process.loadEnvFile();
 
@@ -15,13 +15,13 @@ const dbConnection = {
 
 const pool = mysql.createPool(dbConnection);
 
-pool.on('connection', (connection) => {
-  console.log('Conexion exitosa a la basde de datos');
-  connection.query('SET SESSION wait_timeout = 28800');
+pool.on("connection", (connection) => {
+  console.log("Conexion exitosa a la basde de datos");
+  connection.query("SET SESSION wait_timeout = 28800");
 });
 
-pool.on('error', (err) => {
-  console.error('Error a la conexion de la base de datos', err);
+pool.on("error", (err) => {
+  console.error("Error a la conexion de la base de datos", err);
 });
 
 export { pool };
