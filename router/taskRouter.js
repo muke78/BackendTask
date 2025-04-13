@@ -1,9 +1,6 @@
 import express from "express";
 import {
-  ObtainFullTask,
-  ObtainTaskCompleted,
-  ObtainTaskInProgress,
-  ObtainTaskWontDo,
+  getTaskByStatus,
   createTask,
   deleteTask,
   editTask,
@@ -59,121 +56,7 @@ api.use(express.json());
  *                   type: string
  */
 
-api.get("/task", ObtainFullTask);
-
-/**
- * @swagger
- * /task-progress:
- *   get:
- *     summary: Obtiene tareas en progreso
- *     description: Devuelve una lista de tareas que están en progreso con el estado "Active".
- *     tags:
- *       - Tareas
- *     responses:
- *       200:
- *         description: Lista de tareas en progreso.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                     description: ID de la tarea.
- *                     example: 1
- *                   name:
- *                     type: string
- *                     description: Nombre de la tarea.
- *                     example: "Tarea de ejemplo"
- *                   status:
- *                     type: string
- *                     description: Estado de la tarea.
- *                     example: "Active"
- *       404:
- *         description: No se encontraron tareas en progreso.
- *       500:
- *         description: Error del servidor.
- */
-
-api.get("/task-progress", ObtainTaskInProgress);
-
-/**
- * @swagger
- * /task-complete:
- *   get:
- *     summary: Obtiene tareas completadas
- *     description: Devuelve una lista de tareas que tienen el estado "Complete".
- *     tags:
- *       - Tareas
- *     responses:
- *       200:
- *         description: Lista de tareas completadas.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                     description: ID de la tarea.
- *                     example: 1
- *                   name:
- *                     type: string
- *                     description: Nombre de la tarea.
- *                     example: "Tarea completada"
- *                   status:
- *                     type: string
- *                     description: Estado de la tarea.
- *                     example: "Complete"
- *       404:
- *         description: No se encontraron tareas completadas.
- *       500:
- *         description: Error del servidor.
- */
-
-api.get("/task-complete", ObtainTaskCompleted);
-
-/**
- * @swagger
- * /task-itWasNot:
- *   get:
- *     summary: Obtiene tareas que no se realizaron
- *     description: Devuelve una lista de tareas con el estado "It was not".
- *     tags:
- *       - Tareas
- *     responses:
- *       200:
- *         description: Lista de tareas que no se realizaron.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                     description: ID de la tarea.
- *                     example: 1
- *                   name:
- *                     type: string
- *                     description: Nombre de la tarea.
- *                     example: "Tarea que no se hizo"
- *                   status:
- *                     type: string
- *                     description: Estado de la tarea.
- *                     example: "It was not"
- *       404:
- *         description: No se encontraron tareas que no se realizaron.
- *       500:
- *         description: Error del servidor.
- */
-
-api.get("/task-itWasNot", ObtainTaskWontDo);
+api.get("/task/:status", getTaskByStatus);
 
 /**
  * @swagger

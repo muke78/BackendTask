@@ -1,13 +1,18 @@
 import { connectionQuery } from "../helpers/connection.helper.js";
 
 // Función genérica para obtener tareas
-const obtainTasks = async (req, res, status = null) => {
+const getTaskByStatus = async (req, res) => {
   try {
-    const query = status
-      ? `SELECT * FROM task WHERE Status = ?`
-      : `SELECT * FROM task`;
+    const { status } = req.params;
 
-    const result = await connectionQuery(query, status ? [status] : []);
+    const query =
+      status && status !== "All"
+        ? `SELECT * FROM task WHERE Status = ?`
+        : `SELECT * FROM task`;
+
+    const params = status && status !== "All" ? [status] : [];
+
+    const result = await connectionQuery(query, params);
 
     if (result.length === 0) {
       return res.status(404).send({ message: "No se encontraron tareas" });
@@ -18,12 +23,6 @@ const obtainTasks = async (req, res, status = null) => {
     return res.status(500).send({ message: "Error al obtener tareas", error });
   }
 };
-
-// Endpoints optimizados
-const ObtainFullTask = (req, res) => obtainTasks(req, res);
-const ObtainTaskInProgress = (req, res) => obtainTasks(req, res, "Active");
-const ObtainTaskCompleted = (req, res) => obtainTasks(req, res, "Complete");
-const ObtainTaskWontDo = (req, res) => obtainTasks(req, res, "ItWasNot");
 
 const createTask = async (req, res) => {
   try {
@@ -99,12 +98,4 @@ const deleteTask = async (req, res) => {
   }
 };
 
-export {
-  ObtainFullTask,
-  ObtainTaskInProgress,
-  ObtainTaskCompleted,
-  ObtainTaskWontDo,
-  createTask,
-  editTask,
-  deleteTask,
-};
+export { getTaskByStatus, createTask, editTask, deleteTask };
