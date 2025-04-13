@@ -98,4 +98,37 @@ const deleteTask = async (req, res) => {
   }
 };
 
-export { getTaskByStatus, createTask, editTask, deleteTask };
+const deleteTaskBulk = async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!Array.isArray(ids) || ids.length === 0)
+      return res.status(400).json({ message: "No se enviaron IDs válidos" });
+
+    const MAX_IDS = 600; // Límite máximo de IDs por solicitud
+    if (ids.length > MAX_IDS) {
+      return res.status(400).send({
+        message: `No se pueden eliminar más de ${MAX_IDS} tareas en una sola solicitud`,
+      });
+    }
+
+    const batchSize = 100; // Tamaño del lote
+    const totalBatches = Math.ceil(ids.length / batchSize);
+
+    for (let i = 0; i < totalBatches; i++) {
+      const batch = ids.slice(i * batchSize, (i + 1) * batchSize);
+      const placeholders = batch.map(() => "?").join(",");
+      const query = `DELETE FROM task WHERE id IN (${placeholders})`;
+
+      await connectionQuery(query, batch);
+    }
+
+    return res.status(200).send({ message: "Tareas eliminadas correctamente" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error al eliminar tareas", error: error });
+  }
+};
+
+export { getTaskByStatus, createTask, editTask, deleteTask, deleteTaskBulk };

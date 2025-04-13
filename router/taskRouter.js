@@ -4,6 +4,7 @@ import {
   createTask,
   deleteTask,
   editTask,
+  deleteTaskBulk,
 } from "../controllers/taskController.js";
 const api = express.Router();
 api.use(express.json());
@@ -251,5 +252,7 @@ api.put("/update-task", editTask);
  */
 
 api.delete("/delete-task/:id", deleteTask);
+
+api.delete("/bulk-delete", deleteTaskBulk);
 
 export { api };
